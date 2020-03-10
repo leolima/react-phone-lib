@@ -1,0 +1,32 @@
+.iti__container {
+  display: flex;
+  position: relative;
+}
+.iti__container select {
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -webkit-padding-end: 20px;
+  -moz-padding-end: 20px;
+  -webkit-padding-start: 2px;
+  -moz-padding-start: 2px;
+  /* for Firefox */
+  -moz-appearance: none;
+  /* for Chrome */
+  -webkit-appearance: none;
+
+  min-width: 36px;
+  height: 28px;
+  text-indent: -9999px;
+}
+
+.iti__container select:not(:-internal-list-box) {
+  overflow: hidden !important;
+}
+
+.iti__container select::-ms-expand {
+  display: none;
+}
