@@ -1,7 +1,7 @@
 {
     "name": "react-phone-lib",
-    "version": "1.0.0",
-    "description": "React phone international field",
+    "version": "1.0.1",
+    "description": "An International phone input React Component",
     "keywords": [
         "React",
         "international",
