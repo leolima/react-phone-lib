@@ -15,3 +15,6 @@ https://github.com/google/libphonenumber
 
     $ cd demo && yarn start
 
+
+
+![Demonstration](https://raw.githubusercontent.com/leolima/react-phone-lib/master/demo/src/img/demo.gif)
