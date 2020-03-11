@@ -16,8 +16,14 @@ or
 
 ## Usage
 
+import the component:
 
-    ```
+```javascript
+import PhoneInput from "react-phone-lib";
+```
+
+
+```javascript
     handleChangeNumber = val => this.setState({ phone: val });
 
     handleOnBlur = () => console.log("onBlur called");
@@ -33,29 +39,29 @@ or
     render() {
         const { phone } = this.state;
         return (
-        <div>
-            <h2>React Phone lib - Demo</h2>
-            <PhoneInput
-            debug
-            autoFormat
-            value={phone}
-            onChange={this.handleChangeNumber}
-            onBlur={this.handleOnBlur}
-            callBack={this.validateNumber}
-            onFocus={this.handleOnFocus}
-            format="INTERNATIONAL"
-            language="es"
-            label="Phone"
-            inputId="phone"
-            defaultCountry="ES"
-            inputClass="input-class"
-            selectClass="select-class"
-            containerClass="container-class"
-            />
-        </div>
+            <div>
+                <h2>React Phone lib - Demo</h2>
+                <PhoneInput
+                debug
+                autoFormat
+                value={phone}
+                onChange={this.handleChangeNumber}
+                onBlur={this.handleOnBlur}
+                callBack={this.validateNumber}
+                onFocus={this.handleOnFocus}
+                format="INTERNATIONAL"
+                language="es"
+                label="Phone"
+                inputId="phone"
+                defaultCountry="ES"
+                inputClass="input-class"
+                selectClass="select-class"
+                containerClass="container-class"
+                />
+            </div>
         );
     }
-    ```
+```
 
 
 ## Development
