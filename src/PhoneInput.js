@@ -1,7 +1,6 @@
 import React from "react";
 import libPhone from "google-libphonenumber";
-import codes from './codes/countryCodes.json';
-import '../node_modules/flag-icon-css/css/flag-icon.min.css';
+import codes from "./codes/countryCodes.json";
 import "./styles/main.css";
 
 import PropTypes from "prop-types";
@@ -130,13 +129,14 @@ class PhoneInput extends React.Component {
           }
         },
         () => {
-          if (onChange) {
+          if (onChange !== null && typeof onChange === 'function') {
             if (autoFormat && format && this.state.number[format]) {
               onChange(this.state.number[format]);
             } else {
               onChange(phone);
             }
           }
+          this.sendCallBack();
           if (debug) {
             console.log("state", this.state);
           }
@@ -144,8 +144,9 @@ class PhoneInput extends React.Component {
       );
     } catch (err) {
       this.setState({ number: null });
-      if (onChange) {
+      if (onChange !== null && typeof onChange === 'function') {
         onChange(phone);
+        this.sendCallBack();
       }
     }
   };
@@ -158,79 +159,109 @@ class PhoneInput extends React.Component {
     });
   };
 
+  sendCallBack = () => {
+    const { callBack } = this.props;
+    if (callBack !== null && typeof callBack === 'function') {
+      callBack(this.state.number);
+    }
+  };
+
+  handleOnBlur = () => {
+    const { onBlur } = this.props;
+    if (onBlur !== null && typeof onBlur === 'function') {
+      onBlur();
+    }
+    this.sendCallBack();
+  };
+  handleOnFocus = () => {
+    const { onFocus } = this.props;
+    if (onFocus !== null && typeof onFocus === 'function') {
+      onFocus();
+    }
+    this.sendCallBack();
+  };
+
   render() {
-    const styles = this.props.styles || {};
-    const { value, label, selectClass } = this.props;
+    const {
+      value,
+      label,
+      selectClass,
+      inputId,
+      containerClass,
+      inputClass
+    } = this.props;
     const { countries, regionCode } = this.state;
 
     return (
-      <div className="iti__container" ref={this.containerRef}>
-        {label && <label style={styles.label}>{label}</label>}
-        
+      <div className={`iti__container ${containerClass}`}>
+        {label && <label htmlFor={inputId}>{label}</label>}
+
         {Object.keys(countries).length > 0 && (
-          <select
-            aria-label={countries.country}
-            className={`${selectClass} flag-icon flag-icon-${`${regionCode}`.toLowerCase()}`}
-            onChange={this.handleSelect}
-            value={`${regionCode}`.toUpperCase()}
-          >
-            {Object.keys(countries).map(k => {
-              if (k !== "ext" && k !== "country" && k !== "phone") {
-                return (
-                  <option
-                    value={k}
-                  >
-                    {countries[k]}
-                  </option>
-                );
-              }
-            })}
-          </select>
+          <div class="iti__flag_container">
+            <span className={`iti__flag iti__${`${regionCode}`.toLowerCase()}`} />
+            <select
+              aria-label={countries.country}
+              className={`${selectClass}`}
+              onChange={this.handleSelect}
+              value={`${regionCode}`.toUpperCase()}
+            >
+              {Object.keys(countries).map(k => {
+                if (k !== "ext" && k !== "country" && k !== "phone") {
+                  return <option value={k}>{countries[k]}</option>;
+                }
+              })}
+            </select>
+          </div>
         )}
 
         <input
+          id={inputId}
           value={value}
           type="text"
-          style={styles.input}
           onChange={this.handleChange}
+          onBlur={this.handleOnBlur}
+          onFocus={this.handleOnFocus}
+          className={inputClass}
         />
       </div>
     );
   }
 }
 
-
 PhoneInput.propTypes = {
-  label: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string,
-  styles: PropTypes.object,
-  defaultCountry: PropTypes.string,
-  autoFormat: PropTypes.bool,
   debug: PropTypes.bool,
-  language: PropTypes.string,
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
+  onChange: PropTypes.func,
+  callBack: PropTypes.func,
+  label: PropTypes.string,
+  value: PropTypes.string,
+  inputId: PropTypes.string,
   format: PropTypes.string,
-  selectClass: PropTypes.string
+  language: PropTypes.string,
+  autoFormat: PropTypes.bool,
+  defaultCountry: PropTypes.string,
+  inputClass: PropTypes.string,
+  selectClass: PropTypes.string,
+  containerClass: PropTypes.string
 };
 
 PhoneInput.defaultProps = {
   debug: false,
-  selectClass: "",
-  language: "pt",
-  autoFormat: true,
-  format: "INTERNATIONAL",
+  onBlur: null,
+  onFocus: null,
+  onChange: null,
+  callBack: null,
   label: null,
   value: "",
+  inputId: null,
+  format: "INTERNATIONAL",
+  language: "pt",
+  autoFormat: true,
   defaultCountry: "BR",
-  styles: {
-    label: {
-      color: "green"
-    },
-    input: {
-      background: "#f1f1f1",
-      border: "1px solid #aaa"
-    }
-  }
+  inputClass: "",
+  selectClass: "",
+  containerClass: ""
 };
 
 export default PhoneInput;
