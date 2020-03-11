@@ -197,7 +197,7 @@ class PhoneInput extends React.Component {
         {label && <label htmlFor={inputId}>{label}</label>}
 
         {Object.keys(countries).length > 0 && (
-          <div class="iti__flag_container">
+          <div className="iti__flag_container">
             <span className={`iti__flag iti__${`${regionCode}`.toLowerCase()}`} />
             <select
               aria-label={countries.country}
