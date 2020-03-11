@@ -3,7 +3,6 @@
 # webpack.config.js
 node_modules
 
-dist
 demo/dist
 demo/node_modules
 yarn.lock
