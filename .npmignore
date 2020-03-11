@@ -1,10 +1,10 @@
-src
 demo
+node_modules
+src
 .babelrc
 webpack.config.js
-node_modules
-.npmignore
 .gitignore
+.npmignore
 
 yarn.lock
 package-lock.json
